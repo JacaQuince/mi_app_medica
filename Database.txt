@@ -1,0 +1,124 @@
+-- 0. Eliminar dependencias y tablas existentes (DROP en orden inverso de dependencias)
+DROP TABLE IF EXISTS citas CASCADE;
+DROP TABLE IF EXISTS signosVitales CASCADE;
+DROP TABLE IF EXISTS tomasmedicamentos CASCADE;
+DROP TABLE IF EXISTS medicamentos CASCADE;
+DROP TABLE IF EXISTS pacientes CASCADE;
+DROP TABLE IF EXISTS usuarios CASCADE;
+DROP TYPE IF EXISTS rol_usuario;
+
+
+
+-- 1. Crear tipo ENUM para roles
+CREATE TYPE rol_usuario AS ENUM ('paciente', 'medico');
+
+-- 2. Tabla usuarios
+CREATE TABLE usuarios (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR(100),
+    correo VARCHAR(100) UNIQUE,
+    contraseña_hash VARCHAR(255),
+    rol rol_usuario NOT NULL
+);
+
+-- 3. Tabla pacientes
+CREATE TABLE pacientes (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR(100),
+    telefono VARCHAR(20),
+    domicilio TEXT,
+    correo_electronico VARCHAR(100),
+    usuario_id BIGINT REFERENCES usuarios(id) ON DELETE CASCADE,
+    doctor_id BIGINT REFERENCES usuarios(id)
+);
+
+-- 4. Tabla medicamentos
+CREATE TABLE medicamentos (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR(100),
+    ingrediente_activo VARCHAR(100),
+    fecha_caducidad DATE
+);
+
+-- 7. Tabla citas 
+CREATE TABLE citas (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    fecha DATE,
+    hora TIME,
+    especialidad VARCHAR(100),
+    paciente_id BIGINT REFERENCES pacientes(id) ON DELETE CASCADE,
+    doctor VARCHAR(100),
+    diagnostico TEXT,
+    activo BOOLEAN DEFAULT TRUE
+);
+-- 5. Tabla tomasmedicamentos
+CREATE TABLE tomasmedicamentos (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    paciente_id BIGINT REFERENCES pacientes(id) ON DELETE CASCADE,
+    medicamento_id BIGINT REFERENCES medicamentos(id) ON DELETE CASCADE,
+    fecha DATE,
+    hora TIME,
+    confirmacion BOOLEAN DEFAULT FALSE,
+    cita_id BIGINT,  -- Tipo BIGINT porque citas.id también es BIGINT
+    CONSTRAINT fk_cita FOREIGN KEY (cita_id) REFERENCES citas(id)
+);
+
+-- 6. Tabla signosvitales
+CREATE TABLE signosVitales (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    paciente_id BIGINT REFERENCES pacientes(id) ON DELETE CASCADE,
+    tipo VARCHAR(50),
+    valor VARCHAR(50),
+    fecha_hora TIMESTAMP
+);
+
+create or replace view vista_medicamentos_por_cita as
+select
+    c.id as cita_id,
+    c.paciente_id,
+    p.nombre as paciente_nombre,
+    c.fecha as fecha_cita,
+    c.hora as hora_cita,
+    c.especialidad,
+    c.diagnostico,
+    tm.fecha as fecha_toma,
+    tm.hora as hora_toma,
+    tm.confirmacion,
+    m.nombre as medicamento,
+    m.ingrediente_activo
+from citas c
+join pacientes p on c.paciente_id = p.id
+left join tomasmedicamentos tm on tm.cita_id = c.id
+left join medicamentos m on m.id = tm.medicamento_id;
+
+create or replace view vista_signos_paciente as
+select
+    sv.paciente_id,
+    p.nombre as paciente_nombre,
+    sv.tipo,
+    sv.valor,
+    sv.fecha_hora
+from signosvitales sv
+join pacientes p on sv.paciente_id = p.id;
+
+create or replace view vista_citas_paciente as
+select
+    c.id as cita_id,
+    c.paciente_id,
+    p.nombre as paciente_nombre,
+    c.fecha,
+    c.hora,
+    c.especialidad,
+    c.doctor,
+    c.diagnostico
+from citas c
+join pacientes p on c.paciente_id = p.id;
+
+
+DROP TABLE IF EXISTS tokens_fcm;
+
+CREATE TABLE tokens_fcm (
+  usuario_id INTEGER PRIMARY KEY,
+  token TEXT NOT NULL
+);
+

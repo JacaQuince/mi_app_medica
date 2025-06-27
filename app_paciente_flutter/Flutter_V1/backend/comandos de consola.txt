@@ -1,0 +1,24 @@
+Ejecutar servicio:
+node index.js
+
+Dejar el servicio corriendo para siempre:
+npm install -g pm2
+pm2 start index.js
+
+Parar el proceso:
+pm2 stop index
+
+Listar procesos:
+pm2 list
+
+Parar con el id de la lista:
+pm2 stop *id*
+
+Reiniciar proceso:
+pm2 restart index
+
+Eliminar proceso:
+pm2 delete index
+
+Ver los logs:
+pm2 logs index

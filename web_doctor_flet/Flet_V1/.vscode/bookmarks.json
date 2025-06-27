@@ -1,0 +1,139 @@
+{
+	"files": [
+		{
+			"path": "Cosas/CRUD_Supabase.py",
+			"bookmarks": [
+				{
+					"line": 3,
+					"column": 0,
+					"label": "Mensajes"
+				},
+				{
+					"line": 102,
+					"column": 0,
+					"label": "Generales"
+				},
+				{
+					"line": 228,
+					"column": 0,
+					"label": "Usuarios"
+				},
+				{
+					"line": 335,
+					"column": 0,
+					"label": "Pacientes"
+				},
+				{
+					"line": 432,
+					"column": 0,
+					"label": "Medicamentos"
+				},
+				{
+					"line": 543,
+					"column": 0,
+					"label": "Toma_Medicamentos"
+				},
+				{
+					"line": 644,
+					"column": 0,
+					"label": "Signos_Vitales"
+				},
+				{
+					"line": 756,
+					"column": 0,
+					"label": "Citas"
+				}
+			]
+		},
+		{
+			"path": "Cosas/main_de_pruebas.py",
+			"bookmarks": [
+				{
+					"line": 35,
+					"column": 0,
+					"label": "login-form"
+				},
+				{
+					"line": 172,
+					"column": 0,
+					"label": "dashboard-form"
+				},
+				{
+					"line": 213,
+					"column": 0,
+					"label": "pacientes-form"
+				},
+				{
+					"line": 331,
+					"column": 0,
+					"label": "medicamentos-form"
+				},
+				{
+					"line": 470,
+					"column": 0,
+					"label": "citas-form"
+				},
+				{
+					"line": 703,
+					"column": 0,
+					"label": "reporte-form"
+				},
+				{
+					"line": 933,
+					"column": 0,
+					"label": "main"
+				}
+			]
+		},
+		{
+			"path": "Cosas/main.py",
+			"bookmarks": [
+				{
+					"line": 35,
+					"column": 0,
+					"label": "login"
+				},
+				{
+					"line": 101,
+					"column": 0,
+					"label": "registrar"
+				},
+				{
+					"line": 172,
+					"column": 0,
+					"label": "dashboard"
+				},
+				{
+					"line": 228,
+					"column": 0,
+					"label": "pacientes"
+				},
+				{
+					"line": 346,
+					"column": 0,
+					"label": "medicamentos"
+				},
+				{
+					"line": 485,
+					"column": 0,
+					"label": "citas"
+				},
+				{
+					"line": 718,
+					"column": 0,
+					"label": "reportes"
+				},
+				{
+					"line": 890,
+					"column": 0,
+					"label": "generar pdf"
+				},
+				{
+					"line": 950,
+					"column": 0,
+					"label": "main"
+				}
+			]
+		}
+	]
+}

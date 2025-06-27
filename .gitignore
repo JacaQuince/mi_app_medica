@@ -1,0 +1,14 @@
+# Para Flutter
+app_paciente_flutter/build/
+app_paciente_flutter/.dart_tool/
+app_paciente_flutter/.idea/
+app_paciente_flutter/.packages
+
+# Para Python/Flet
+__pycache__/
+*.pyc
+.env
+*.db
+
+# General
+.DS_Store
